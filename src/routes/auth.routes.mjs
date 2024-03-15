@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Router } from "express";
 import { checkSchema } from "express-validator";
-import { createUserValidationSchema } from "../utils/validationSchemas.mjs";
+import { createUserValidationSchema } from "../database/schemas/auth/userSchema.mjs/index.js";
 import * as authController from "../controllers/auth/authController.mjs";
 
 const router = Router();

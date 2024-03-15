@@ -1,58 +1,94 @@
 import { validationResult, matchedData } from "express-validator";
-import { mockUsers } from "../../utils/constants.mjs";
-import { User } from "../../mongoose/schemas/auth/user.mjs";
-import { hashPassword } from "../../utils/helpers.mjs";
+import { userDao } from "../../database/daos/auth/users.dao.mjs";
 
-export const index = (request, response) => {
-  // request.sessionStore.get(request.session.id, (err, sessionData) => {
+export const index = async (req, res) => {
+  // req.sessionStore.get(req.session.id, (err, sessionData) => {
   //   if (err) {
   //     throw err;
   //   }
   // });
 
-  // //query validation
-  // const result = validationResult(request);
-
-  // //
+  //query validation
+  // const result = validationResult(req);
+  //get query data
   // const {
   //   query: { filter, value },
-  // } = request;
+  // } = req;
+  try {
+    const users = await userDao.getAllUsers();
+    if (!users) return res.sendStatus(404);
+    return res.send(users);
+  } catch (error) {
+    console.log(err);
+    return res.sendStatus(400);
+  }
+
   // if (filter && value)
   //   return response.send(
   //     mockUsers.filter((user) => user[filter].includes(value))
   //   );
-  return response.send(mockUsers);
+  // return response.send(mockUsers);
 };
 
-export const show = (request, response) => {
-  const { findUserIndex } = request;
-  const findUser = mockUsers[findUserIndex];
-  if (!findUser) return response.sendStatus(404);
-  return response.send(findUser);
-};
-
-export const store = async (request, response) => {
-  const result = validationResult(request);
-  if (!result.isEmpty()) return response.status(400).send(result.array());
-  const data = matchedData(request);
-  data.password = hashPassword(data.password);
-  const newUser = new User(data);
+//--send a user by his id to the client
+export const show = async (req, res) => {
+  //save id validated
+  const { parsedId } = req;
   try {
-    const savedUser = await newUser.save();
-    return response.status(201).send(savedUser);
-  } catch (err) {
-    return response.sendStatus(400);
+    const findUser = await userDao.getUser(parsedId);
+    if (!findUser) return res.sendStatus(404);
+    return res.send(findUser);
+  } catch (error) {
+    console.log(err);
+    return res.sendStatus(400);
   }
 };
 
-export const update = (request, response) => {
-  const { body, findUserIndex } = request;
-  mockUsers[findUserIndex] = { id: mockUsers[findUserIndex].id, ...body };
-  return response.sendStatus(200);
+//--save a user recived from the client
+export const store = async (req, res) => {
+  //schema validation
+  const result = validationResult(req);
+  if (!result.isEmpty()) return res.status(400).send(result.array());
+  //get data
+  const data = matchedData(req);
+  try {
+    //save data
+    const savedUser = await userDao.addUser(data);
+    return res.status(201).send(savedUser);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(400);
+  }
 };
 
-export const destroy = (request, response) => {
-  const { findUserIndex } = request;
-  mockUsers.splice(findUserIndex, 1);
-  return response.sendStatus(200);
+//--update a user by his id recived form the client
+export const update = async (req, res) => {
+  //save id validated
+  const { parsedId } = req;
+  //schema validation
+  const result = validationResult(req);
+  if (!result.isEmpty()) return res.status(400).send(result.array());
+  //get data
+  const data = matchedData(req);
+  try {
+    //update data
+    const updatedUser = await userDao.updateUser(parsedId, data);
+    return res.status(201).send(updatedUser);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(400);
+  }
+};
+
+//--delete a user by his id recived form the client
+export const destroy = async (req, res) => {
+  //save id validated
+  const { parsedId } = req;
+  try {
+    await userDao.deleteUser(parsedId);
+    return res.sendStatus(200);
+  } catch (error) {
+    console.log(err);
+    return res.sendStatus(400);
+  }
 };

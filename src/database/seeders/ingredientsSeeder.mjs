@@ -1,4 +1,4 @@
-import { Ingredient } from "../schemas/ingredients.mjs";
+import { Ingredient } from "../models/ingredients.schema.mjs/index.js";
 
 const ingredientsToSeed = [
   { name: "Papa2", type: "vegetal" },

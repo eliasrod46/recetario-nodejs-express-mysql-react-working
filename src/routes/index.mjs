@@ -1,7 +1,9 @@
 import { Router } from "express";
-import usersRouter from "./users.mjs";
-import ingredientsRouter from "./ingredients.mjs";
-import authRouter from "./auth.mjs";
+//routes
+import usersRouter from "./users.routes.mjs/index.js";
+import ingredientsRouter from "./ingredients.routes.mjs/index.js";
+import authRouter from "./auth.routes.mjs/index.js";
+//middleares
 import { authMiddleware } from "../utils/middlewares.mjs";
 
 const router = Router();
