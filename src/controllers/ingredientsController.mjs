@@ -1,6 +1,5 @@
 import { validationResult, matchedData } from "express-validator";
-import { mockUsers } from "../../utils/constants.mjs";
-import { User } from "../../mongoose/schemas/auth/user.mjs";
+import { Ingredient } from "../mongoose/schemas/ingredients.mjs";
 import { hashPassword } from "../../utils/helpers.mjs";
 
 export const index = (request, response) => {

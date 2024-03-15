@@ -1,11 +1,8 @@
-import mongoose from "mongoose";
 import { createApp } from "./createApp.mjs";
+import { mongoDBConnection } from "./mongoose/connectionDB.mjs";
 
 // Database connection
-mongoose
-  .connect("mongodb://localhost/express_tutorial")
-  .then(() => console.log("Connected to Database"))
-  .catch((err) => console.log(`Error: ${err}`));
+mongoDBConnection();
 
 const app = createApp();
 

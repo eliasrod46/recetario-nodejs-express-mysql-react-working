@@ -11,14 +11,14 @@ import "./strategies/local-strategy.mjs";
 export function createApp() {
   const app = express();
   app.use(express.json());
-  app.use(cookieParser("helloworld"));
+  app.use(cookieParser("thesecret"));
 
   //Passport config
   app.use(
     session({
-      secret: "anson the dev",
+      secret: "thesecret",
       saveUninitialized: true,
-      resave: false,
+      resave: true,
       cookie: {
         maxAge: 60000 * 60,
       },
@@ -33,7 +33,7 @@ export function createApp() {
   app.use(passport.session());
 
   //Routes
-  app.use(routes);
+  app.use("/api", routes);
 
   return app;
 }
