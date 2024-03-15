@@ -9,5 +9,12 @@ const router = Router();
 router.use("/auth", authRouter);
 router.use("/admin/users", [authMiddleware], usersRouter);
 router.use("/ingredients/", [authMiddleware], ingredientsRouter);
+router.use(
+  "/products/",
+  [
+    /*authMiddleware*/
+  ],
+  ingredientsRouter
+);
 
 export default router;
