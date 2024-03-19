@@ -1,14 +1,15 @@
 import { validationResult, matchedData } from "express-validator";
-import { User } from "../../mongoose/schemas/auth/user.mjs";
 import { hashPassword } from "../../utils/helpers.mjs";
+import { userDao } from "../../database/daos/auth/users.dao.mjs";
 
-//-- save a user recived from de client
+//-- save a user recived from the client
 export const register = async (req, res) => {
   //schema validation
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).send(result.array());
-  //get data
+  //get data & hashpassword
   const data = matchedData(req);
+  data.password = hashPassword(data.password);
   try {
     //save data
     const savedUser = await userDao.addUser(data);
@@ -18,14 +19,9 @@ export const register = async (req, res) => {
   }
 };
 
-export const adminIndex = async (request, response) => {
-  if (!result.isEmpty()) return response.status(400).send(result.array());
-  const data = matchedData(request);
-  data.password = hashPassword(data.password);
-  const newUser = new User(data);
+export const adminIndex = async (req, res) => {
   try {
-    const savedUser = await newUser.save();
-    return response.status(201).send(savedUser);
+    return response.status(201).send("savedUser");
   } catch (err) {
     return response.sendStatus(400);
   }

@@ -1,5 +1,5 @@
 import { createApp } from "./createApp.mjs";
-import { mongoDBConnection } from "./mongoose/connectionDB.mjs";
+import { mongoDBConnection } from "./database/connectionDB.mjs";
 
 // Database connection
 mongoDBConnection();

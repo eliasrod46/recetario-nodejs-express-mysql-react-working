@@ -7,7 +7,7 @@ import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import "./strategies/local-strategy.mjs";
 // import "./strategies/discord-strategy.mjs";
-import { seed } from "./mongoose/seeders/index.mjs";
+import { seed } from "./database/seeders/index.mjs";
 
 export function createApp() {
   const app = express();
@@ -37,7 +37,7 @@ export function createApp() {
   app.use("/api", routes);
 
   //seed(uncomment to seed)
-  // seed();
+  seed();
 
   return app;
 }

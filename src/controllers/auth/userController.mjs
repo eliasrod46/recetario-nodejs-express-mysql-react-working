@@ -1,5 +1,6 @@
 import { validationResult, matchedData } from "express-validator";
 import { userDao } from "../../database/daos/auth/users.dao.mjs";
+import { hashPassword } from "../../utils/helpers.mjs";
 
 export const index = async (req, res) => {
   // req.sessionStore.get(req.session.id, (err, sessionData) => {
@@ -49,8 +50,9 @@ export const store = async (req, res) => {
   //schema validation
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(400).send(result.array());
-  //get data
+  //get data & hashpassword
   const data = matchedData(req);
+  data.password = hashPassword(data.password);
   try {
     //save data
     const savedUser = await userDao.addUser(data);
@@ -70,6 +72,12 @@ export const update = async (req, res) => {
   if (!result.isEmpty()) return res.status(400).send(result.array());
   //get data
   const data = matchedData(req);
+  //-Exclude password with spreadoperator, cange password function, must be in other function
+  /*
+   *
+   *
+   *
+   * */
   try {
     //update data
     const updatedUser = await userDao.updateUser(parsedId, data);

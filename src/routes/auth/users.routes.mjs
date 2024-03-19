@@ -1,11 +1,11 @@
 import { Router } from "express";
 //validation
 import { query, checkSchema } from "express-validator";
-import { userSchema } from "../database/schemas/auth/userSchema.mjs";
+import { userSchema } from "../../database/dtoSchemas/auth/userSchema.mjs";
 //midlewates
-import { validateId } from "../utils/middlewares.mjs";
+import { validateId } from "../../utils/middlewares.mjs";
 //controllers
-import * as userController from "../controllers/auth/userController.mjs";
+import * as userController from "../../controllers/auth/userController.mjs";
 
 const router = Router();
 

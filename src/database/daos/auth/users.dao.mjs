@@ -15,12 +15,12 @@ class UserDao {
   }
 
   //--->add new user
-  async addUser(User) {
+  async addUser(user) {
     const newUser = new User({
-      name: User.name,
-      type: User.type,
+      name: user.name,
+      type: user.type,
     });
-    const response = await addUser.save();
+    const response = await newUser.save();
     return response;
   }
 
@@ -32,12 +32,11 @@ class UserDao {
 
   //--->update user
   async updateUser(id, user) {
-    const response = await Productos.updateOne(
+    const response = await User.updateOne(
       { _id: id },
       {
         $set: {
           name: user.name,
-          type: user.type,
         },
       }
     );

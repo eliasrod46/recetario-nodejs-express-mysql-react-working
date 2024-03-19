@@ -1,8 +1,9 @@
 import { Router } from "express";
 //routes
-import usersRouter from "./users.routes.mjs/index.js";
-import ingredientsRouter from "./ingredients.routes.mjs/index.js";
-import authRouter from "./auth.routes.mjs/index.js";
+import usersRouter from "./auth/users.routes.mjs";
+import ingredientsRouter from "./ingredients.routes.mjs";
+import authRouter from "./auth/auth.routes.mjs";
+import rutaspruebas from "./prueba.routes.mjs";
 //middleares
 import { authMiddleware } from "../utils/middlewares.mjs";
 
@@ -19,4 +20,5 @@ router.use(
   ingredientsRouter
 );
 
+router.use("/prueba/", rutaspruebas);
 export default router;

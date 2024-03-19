@@ -1,16 +1,13 @@
 import passport from "passport";
 import { Router } from "express";
 import { checkSchema } from "express-validator";
-import { createUserValidationSchema } from "../database/schemas/auth/userSchema.mjs/index.js";
-import * as authController from "../controllers/auth/authController.mjs";
+import { userSchema } from "../../database/dtoSchemas/auth/userSchema.mjs";
+import * as authController from "../../controllers/auth/authController.mjs";
+import "../../strategies/local-strategy.mjs";
 
 const router = Router();
 
-router.post(
-  "/register",
-  checkSchema(createUserValidationSchema),
-  authController.register
-);
+router.post("/register", checkSchema(userSchema), authController.register);
 
 router.post("/login", passport.authenticate("local"), (request, response) => {
   response.sendStatus(200);

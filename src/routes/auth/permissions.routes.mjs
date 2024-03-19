@@ -1,7 +1,7 @@
 import { Router } from "express";
 //validation
 import { checkSchema } from "express-validator";
-import { ingredientSchema } from "../database/dtoSchemas/ingredientsSchema.mjs";
+import { ingredientSchema } from "../database/schemas/ingredientsSchema.mjs";
 //midlewates
 import { validateId } from "../utils/middlewares.mjs";
 //controllers

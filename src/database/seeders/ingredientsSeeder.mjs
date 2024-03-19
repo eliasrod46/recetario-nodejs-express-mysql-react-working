@@ -1,13 +1,13 @@
-import { Ingredient } from "../models/ingredients.schema.mjs/index.js";
+import { Ingredient } from "../models/ingredients.schema.mjs";
 
 const ingredientsToSeed = [
   { name: "Papa2", type: "vegetal" },
   { name: "Carne Molida2", type: "Proteina Animal" },
 ];
 
-export const seedIngredients = (ingredients = ingredientsToSeed) => {
+export const seedIngredients = () => {
   try {
-    ingredients.forEach(async (ingredient) => {
+    ingredientsToSeed.forEach(async (ingredient) => {
       const newIngredient = new Ingredient(ingredient);
       await newIngredient.save();
     });
