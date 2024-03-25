@@ -3,10 +3,10 @@ import routes from "./routes/index.mjs";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "passport";
+// import "./strategies/local-strategy.mjs";
+// import "./strategies/discord-strategy.mjs";
 import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
-import "./strategies/local-strategy.mjs";
-// import "./strategies/discord-strategy.mjs";
 import { seed } from "./database/seeders/index.mjs";
 
 export function createApp() {

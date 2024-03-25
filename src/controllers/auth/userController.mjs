@@ -15,6 +15,7 @@ export const index = async (req, res) => {
   // const {
   //   query: { filter, value },
   // } = req;
+
   try {
     const users = await userDao.getAllUsers();
     if (!users) return res.sendStatus(404);

@@ -14,6 +14,12 @@ class UserDao {
     return response;
   }
 
+  //--->get user by email
+  async getUserByEmail(email) {
+    const response = await User.findOne({ email });
+    return response;
+  }
+
   //--->add new user
   async addUser(user) {
     const newUser = new User({
